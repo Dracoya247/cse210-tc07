@@ -3,7 +3,7 @@ from game import constants
 from game.actor import Actor
 from game.point import Point
 
-class Food(Actor):
+class Word(Actor):
     """A nutritious substance that snake's like. The responsibility of Food is to keep track of its appearance and position. A Food can move around randomly if asked to do so. 
     
     Stereotype:
