@@ -1,6 +1,6 @@
 from time import sleep
 from game import constants
-from game.food import Food
+from game.word import Word
 from game.score import Score
 from game.snake import Snake
 
@@ -12,7 +12,7 @@ class Director:
         Controller
 
     Attributes:
-        food (Food): The snake's target.
+        word (Word): The snake's target. (adapted from Food)
         input_service (InputService): The input mechanism.
         keep_playing (boolean): Whether or not the game can continue.
         output_service (OutputService): The output mechanism.
@@ -26,7 +26,7 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        self._food = Food()
+        self._word = Word()
         self._input_service = input_service
         self._keep_playing = True
         self._output_service = output_service
@@ -63,7 +63,7 @@ class Director:
             self (Director): An instance of Director.
         """
         self._handle_body_collision()
-        self._handle_food_collision()
+        self._handle_word_collision()
         
     def _do_outputs(self):
         """Outputs the important game information for each round of play. In 
@@ -74,7 +74,7 @@ class Director:
             self (Director): An instance of Director.
         """
         self._output_service.clear_screen()
-        self._output_service.draw_actor(self._food)
+        self._output_service.draw_actor(self._word)
         self._output_service.draw_actors(self._snake.get_all())
         self._output_service.draw_actor(self._score)
         self._output_service.flush_buffer()
@@ -93,7 +93,7 @@ class Director:
                 self._keep_playing = False
                 break
 
-    def _handle_food_collision(self):
+    def _handle_word_collision(self):
         """Handles collisions between the snake's head and the food. Grows the 
         snake, updates the score and moves the food if there is one.
 
@@ -101,9 +101,9 @@ class Director:
             self (Director): An instance of Director.
         """
         head = self._snake.get_head()
-        if head.get_position().equals(self._food.get_position()):
-            points = self._food.get_points()
+        if head.get_position().equals(self._word.get_position()):
+            points = self._word.get_points()
             for n in range(points):
                 self._snake.grow_tail()
             self._score.add_points(points)
-            self._food.reset() 
+            self._word.reset() 
