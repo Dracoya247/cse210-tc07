@@ -1,5 +1,4 @@
 import sys
-from game.point import Point
 from asciimatics.event import KeyboardEvent
 
 class InputService:
@@ -21,26 +20,27 @@ class InputService:
             self (InputService): An instance of InputService.
         """
         self._screen = screen
-        self._directions = {}
-        self._directions[119] = Point(0, -1) # UP
-        self._directions[97] = Point(-1, 0) # DOWN
-        self._directions[100] = Point(1, 0) # RIGHT
-        self._directions[115] = Point(0, 1) # LEFT
-        self._current = self._directions[100]
         
     def get_direction(self):
-        """Gets the selected direction. If one hasn't been selected the last 
-        one is returned.
+        """
+        Gets the typed letter. 
 
         Args:
             self (InputService): An instance of InputService.
 
         Returns:
-            Point: The selected direction.
+            string: The typed letter.
         """
+        result = ""
         event = self._screen.get_key()
+        
         if not event is None:
-            if event == 27:
+            if event == 1:
                 sys.exit()
-            self._current = self._directions.get(event, self._current)
-        return self._current
+            
+            character = chr(event)
+            if character == '\r' or character == '\n':
+                result = '*'
+            elif character >= 'A' and character <= 'z':
+                result = char
+        return result
